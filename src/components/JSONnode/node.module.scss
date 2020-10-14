@@ -1,0 +1,22 @@
+.summary {
+  border: 1px dotted tomato;
+}
+
+.node:not(details) {
+  .key {
+    margin-left: 1rem;
+  }
+}
+
+.key {
+  font-weight: 700;
+  color: gray;
+}
+
+.value {
+  padding-left: 1rem;
+}
+
+.value > details {
+  margin-left: 1rem;
+}
