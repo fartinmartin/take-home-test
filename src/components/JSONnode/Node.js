@@ -2,10 +2,11 @@ import React from "react";
 import styles from "./node.module.scss";
 
 const Node = ({ data }) => {
-  // expecting object:
-  // { key: "name", value: "Tatooine" }
+  // expecting an object:
+  // data = { key: "name", value: "Tatooine" }
 
   if (Array.isArray(data.value)) {
+    // return for arrays
     return (
       <details className={styles.node}>
         <summary className={styles.summary}>
@@ -13,22 +14,19 @@ const Node = ({ data }) => {
           <span className={styles.type}>{"[]"}</span>
           <span className={styles.arrayLength}>{`(${data.value.length})`}</span>
         </summary>
-        <ul className={styles.value}>
+        <ol className={styles.value} start="0">
           {data.value.map((item, index) => (
-            <li key={index}>
-              <span className={styles.label}>{index}</span>
-              {item}
-            </li>
+            <li key={index}> {item} </li>
           ))}
-        </ul>
+        </ol>
       </details>
     );
-  } else if (typeof data.value === "object") {
+  } else if (typeof data.value === "object" && data.value) {
     let nodes = [];
     for (const [key, value] of Object.entries(data.value)) {
       nodes.push({ key, value });
     }
-
+    // return for objects
     return (
       <details className={styles.node}>
         <summary className={styles.summary}>
@@ -43,6 +41,8 @@ const Node = ({ data }) => {
       </details>
     );
   } else {
+    // return for string, number, boolean, null
+    // TODO: conditional classes for each type
     return (
       <div className={styles.node}>
         <span className={styles.key}>{data.key}</span>: {data.value}

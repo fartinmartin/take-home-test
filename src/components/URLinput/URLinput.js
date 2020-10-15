@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 
 const URLinput = (props) => {
   const queryInput = useRef(null);
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState(""); // https://swapi.dev/api/planets/1/ // https://www.breakingbadapi.com/api/characters
   const [isValid, setIsValid] = useState(false);
 
   useEffect(() => {
