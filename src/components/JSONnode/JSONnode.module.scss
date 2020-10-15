@@ -3,6 +3,7 @@
 }
 
 .node:not(details) {
+  // sub nodes should be indented
   .key {
     margin-left: 1rem;
   }
