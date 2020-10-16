@@ -2,15 +2,19 @@
   border: 1px dotted tomato;
 }
 
-.node:not(details) {
-  // sub nodes should be indented
-  .key {
-    margin-left: 1rem;
+.node {
+  padding: 0.125rem 0;
+
+  &:not(details) {
+    // sub nodes should be indented
+    .key {
+      margin-left: 1rem;
+    }
   }
 }
 
 .key {
-  font-weight: 700;
+  font-weight: 600;
   color: gray;
 }
 

@@ -52,7 +52,7 @@ const ObjectJSONnode = ({ data, open }) => {
 };
 
 const OtherJSONnode = ({ data }) => {
-  // return for string, number, boolean, null
+  // return for string, number, boolean, null, Date
   // TODO: conditional classes for each type
   return (
     <div className={styles.node}>

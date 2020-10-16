@@ -3,13 +3,15 @@ import styles from "./URLinput.module.scss";
 
 const URLinput = (props) => {
   const inputRef = useRef(null);
-  const [query, setQuery] = useState("");
-  const [isValid, setIsValid] = useState(false);
+  const [query, setQuery] = useState("https://swapi.dev/api/planets/1/");
+  const [isValid, setIsValid] = useState(true);
 
   const placeholders = [
     "https://www.breakingbadapi.com/api/characters",
     "https://swapi.dev/api/planets/1/",
   ];
+  const placeholder =
+    placeholders[Math.floor(Math.random() * placeholders.length)];
 
   useEffect(() => {
     inputRef.current.focus();
@@ -18,7 +20,6 @@ const URLinput = (props) => {
   const validateQuery = ({ logError }) => {
     try {
       new URL(query);
-      console.log(new URL(query));
       setIsValid(true);
     } catch (error) {
       logError && console.error(error);
@@ -34,7 +35,7 @@ const URLinput = (props) => {
   const handlePaste = (e) => {
     e.preventDefault(); // prevents paste event from polluting query value
     setQuery(e.clipboardData.getData("Text"));
-    validateQuery({ logError: false }); // TODO: this doesn't seem to update in sync 🤷‍♂️
+    validateQuery({ logError: false }); // TODO: this doesn't seem to work on the FIRST paste event 🤷‍♂️
   };
 
   const handleSubmit = (e) => {
@@ -60,14 +61,12 @@ const URLinput = (props) => {
           className={styles.input}
           aria-describedby="url-input-status"
           aria-invalid={!isValid}
-          placeholder={
-            placeholders[Math.floor(Math.random() * placeholders.length)]
-          }
+          placeholder={`e.g. ${placeholder}`}
           required
         />
         {!isValid && (
           <span id="url-input-status" className={styles.status}>
-            <span className="code">{query}</span> is not a valid URL.
+            Please enter a valid URL.
           </span>
         )}
       </div>

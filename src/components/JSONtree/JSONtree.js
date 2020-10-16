@@ -26,7 +26,7 @@ const JSONtree = ({ data }) => {
 
   const renderJSONnodes = () => {
     if (!nodes.length) {
-      return <span>Give me some data!</span>;
+      return <span>Fetch me some data!</span>;
     } else {
       return nodes.map((node, index) => <JSONnode data={node} key={index} />);
     }
