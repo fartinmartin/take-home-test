@@ -1,21 +1,17 @@
 import React, { useEffect, useRef, useState } from "react";
+import { randomFromArray } from "../../utils";
 import styles from "./URLinput.module.scss";
 
 const URLinput = (props) => {
   const inputRef = useRef(null);
-  const [query, setQuery] = useState("https://swapi.dev/api/planets/1/");
-  const [isValid, setIsValid] = useState(true);
-
-  const placeholders = [
-    "https://www.breakingbadapi.com/api/characters",
-    "https://swapi.dev/api/planets/1/",
-  ];
-  const placeholder =
-    placeholders[Math.floor(Math.random() * placeholders.length)];
+  const [query, setQuery] = useState("");
+  const [isValid, setIsValid] = useState(false);
+  const [placeholder, setPlaceholder] = useState("");
 
   useEffect(() => {
     inputRef.current.focus();
-  }, [inputRef]);
+    setPlaceholder(randomFromArray(props.placeholders));
+  }, [inputRef, props.placeholders]);
 
   const validateQuery = ({ logError }) => {
     try {
@@ -61,19 +57,19 @@ const URLinput = (props) => {
           className={styles.input}
           aria-describedby="url-input-status"
           aria-invalid={!isValid}
-          placeholder={`e.g. ${placeholder}`}
           required
         />
         {!isValid && (
           <span id="url-input-status" className={styles.status}>
-            Please enter a valid URL.
+            Please enter a valid URL.{" "}
+            <span className={styles.hint}>For example: {placeholder}</span>
           </span>
         )}
       </div>
       <input
         type="submit"
         value="Fetch"
-        className={styles.button}
+        className={`${styles.button} ${isValid && styles.valid}`}
         disabled={!isValid}
       />
     </form>

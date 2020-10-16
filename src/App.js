@@ -38,7 +38,13 @@ const App = () => {
 
   return (
     <div className="app-wrap">
-      <URLinput callback={fetchData} />
+      <URLinput
+        callback={fetchData}
+        placeholders={[
+          "https://www.breakingbadapi.com/api/characters",
+          "https://swapi.dev/api/planets/1/",
+        ]}
+      />
       {renderJSONtree()}
     </div>
   );
