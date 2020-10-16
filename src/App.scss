@@ -1,5 +1,26 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+:root {
+  font-size: 18px;
+
+  --gray: #f4f4f4;
+  --red: #ff0000;
+}
+
 body {
-  font-size: 100%;
   line-height: 1.5;
-  letter-spacing: 0.02em;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+    Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+
+.app-wrap {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
 }

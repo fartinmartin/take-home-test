@@ -37,10 +37,10 @@ const App = () => {
   };
 
   return (
-    <main>
+    <div className="app-wrap">
       <URLinput callback={fetchData} />
       {renderJSONtree()}
-    </main>
+    </div>
   );
 };
 

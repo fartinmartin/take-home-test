@@ -2,17 +2,23 @@ import React, { useEffect, useRef, useState } from "react";
 import styles from "./URLinput.module.scss";
 
 const URLinput = (props) => {
-  const queryInput = useRef(null);
-  const [query, setQuery] = useState(""); // https://swapi.dev/api/planets/1/ // https://www.breakingbadapi.com/api/characters
+  const inputRef = useRef(null);
+  const [query, setQuery] = useState("");
   const [isValid, setIsValid] = useState(false);
 
+  const placeholders = [
+    "https://www.breakingbadapi.com/api/characters",
+    "https://swapi.dev/api/planets/1/",
+  ];
+
   useEffect(() => {
-    queryInput.current.focus();
-  }, [queryInput]);
+    inputRef.current.focus();
+  }, [inputRef]);
 
   const validateQuery = ({ logError }) => {
     try {
       new URL(query);
+      console.log(new URL(query));
       setIsValid(true);
     } catch (error) {
       logError && console.error(error);
@@ -39,12 +45,14 @@ const URLinput = (props) => {
 
   return (
     <form onSubmit={handleSubmit} className={styles.form}>
-      <div>
-        <label for="url">Public JSON API endpoint</label>
+      <label className={styles.label} htmlFor="url">
+        Public JSON API endpoint:
+      </label>
+      <div className={styles.inputWrap}>
         <input
           id="url"
           type="text"
-          ref={queryInput}
+          ref={inputRef}
           value={query}
           onChange={handleQueryChange}
           onPaste={handlePaste}
@@ -52,13 +60,23 @@ const URLinput = (props) => {
           className={styles.input}
           aria-describedby="url-input-status"
           aria-invalid={!isValid}
+          placeholder={
+            placeholders[Math.floor(Math.random() * placeholders.length)]
+          }
           required
         />
-        <span id="url-input-status" className={styles.status}>
-          <span className="code">{query}</span> is not a valid URL.
-        </span>
+        {!isValid && (
+          <span id="url-input-status" className={styles.status}>
+            <span className="code">{query}</span> is not a valid URL.
+          </span>
+        )}
       </div>
-      <input type="submit" value="Fetch" className={styles.button} />
+      <input
+        type="submit"
+        value="Fetch"
+        className={styles.button}
+        disabled={!isValid}
+      />
     </form>
   );
 };
