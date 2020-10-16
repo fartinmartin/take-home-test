@@ -13,9 +13,9 @@ const URLinput = (props) => {
     setPlaceholder(randomFromArray(props.placeholders));
   }, [inputRef, props.placeholders]);
 
-  const validateQuery = ({ logError }) => {
+  const validateQuery = (input = query, { logError } = { logError: false }) => {
     try {
-      new URL(query);
+      new URL(input);
       setIsValid(true);
     } catch (error) {
       logError && console.error(error);
@@ -25,18 +25,19 @@ const URLinput = (props) => {
 
   const handleQueryChange = (e) => {
     setQuery(e.target.value);
-    validateQuery({ logError: false });
+    validateQuery();
   };
 
   const handlePaste = (e) => {
     e.preventDefault(); // prevents paste event from polluting query value
     setQuery(e.clipboardData.getData("Text"));
-    validateQuery({ logError: false }); // TODO: this doesn't seem to work on the FIRST paste event 🤷‍♂️
+    validateQuery(e.clipboardData.getData("Text")); // this is a work around. it should be checking `query`, but `query` does not update by the time this is run? 🤷‍♂️
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    validateQuery({ logError: true });
+    // even though our submit button is disabled on !isValid, let's do some validation just to be sure:
+    validateQuery(query, { logError: true });
     isValid && props.callback(query);
   };
 
@@ -53,7 +54,7 @@ const URLinput = (props) => {
           value={query}
           onChange={handleQueryChange}
           onPaste={handlePaste}
-          onBlur={validateQuery}
+          onBlur={() => validateQuery(query)}
           className={styles.input}
           aria-describedby="url-input-status"
           aria-invalid={!isValid}
