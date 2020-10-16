@@ -1,3 +1,5 @@
+### From [reddit](https://old.reddit.com/r/webdev/comments/j9rthg/i_failed_a_home_assignment_as_part_of_an/)
+
 Your task is to develop a reusable UI component that retrieves JSON data from a given URL and shows it in a tree view where nodes can be expanded and collapsed.
 
 The component should be able to handle any valid JSON, without any expectations regarding its structure.

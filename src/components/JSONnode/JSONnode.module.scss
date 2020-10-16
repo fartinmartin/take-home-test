@@ -18,6 +18,7 @@
   padding-left: 1rem;
 }
 
-.value > details {
+.value > details:not(.array),
+.value > details:not(.object) {
   margin-left: 1rem;
 }
