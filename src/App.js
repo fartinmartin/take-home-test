@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import "./App.scss";
 import Error from "./components/Error";
 import JSONtree from "./components/JSONtree/JSONtree";
 import Loading from "./components/Loading";

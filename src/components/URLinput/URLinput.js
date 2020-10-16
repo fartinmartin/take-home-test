@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import styles from "./URLinput.module.scss";
 
 const URLinput = (props) => {
   const queryInput = useRef(null);
@@ -26,12 +27,9 @@ const URLinput = (props) => {
 
   const handlePaste = (e) => {
     e.preventDefault(); // prevents paste event from polluting query value
-    setQuery(e.clipboardData.getData("Text")); // TODO: this doesn't seem to update it 🤷‍♂️
-    validateQuery({ logError: false });
+    setQuery(e.clipboardData.getData("Text"));
+    validateQuery({ logError: false }); // TODO: this doesn't seem to update in sync 🤷‍♂️
   };
-
-  // TODO: debounce the onChange event
-  // const handleQueryDebounced = debounce(handleQueryChange, 250);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -40,19 +38,27 @@ const URLinput = (props) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="url-input">
-      <span className="url-input__status">
-        This {isValid ? `is` : `is not`} a URL.
-      </span>
-      <input
-        type="text"
-        ref={queryInput}
-        value={query}
-        onChange={handleQueryChange}
-        onPaste={handlePaste}
-        className="url-input__input"
-      />
-      <input type="submit" value="Fetch" className="url-input__button" />
+    <form onSubmit={handleSubmit} className={styles.form}>
+      <div>
+        <label for="url">Public JSON API endpoint</label>
+        <input
+          id="url"
+          type="text"
+          ref={queryInput}
+          value={query}
+          onChange={handleQueryChange}
+          onPaste={handlePaste}
+          onBlur={validateQuery}
+          className={styles.input}
+          aria-describedby="url-input-status"
+          aria-invalid={!isValid}
+          required
+        />
+        <span id="url-input-status" className={styles.status}>
+          <span className="code">{query}</span> is not a valid URL.
+        </span>
+      </div>
+      <input type="submit" value="Fetch" className={styles.button} />
     </form>
   );
 };
