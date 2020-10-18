@@ -1,28 +1,48 @@
-.summary {
-  border: 1px dotted tomato;
-}
-
 .node {
   padding: 0.125rem 0;
 
-  &:not(details) {
-    // sub nodes should be indented
-    .key {
-      margin-left: 1rem;
+  &.typeOther {
+    .summary:first-of-type {
+      list-style-type: none;
+      padding-left: 1rem;
+    }
+
+    .summary::-webkit-details-marker {
+      display: none;
+      padding-left: 1rem;
+    }
+  }
+
+  &.typeArray {
+    .value {
+      margin-left: 4rem;
     }
   }
 }
 
+.summary,
+.arrayItem {
+  &:hover {
+    background: var(--gray-light);
+  }
+}
+
 .key {
-  font-weight: 600;
-  color: var(--gray-dark);
+  // font-weight: 600;
+  // color: var(--gray-dark);
 }
 
 .value {
   padding-left: 1rem;
 }
 
-.value > details:not(.array),
-.value > details:not(.object) {
-  margin-left: 1rem;
+.typeHint {
+  font-style: italic;
+  color: var(--gray-dark);
+}
+
+.arrayItem {
+  &::marker {
+    color: var(--gray-dark);
+  }
 }

@@ -16,15 +16,19 @@ const JSONnode = ({ data }) => {
 
 const ArrayJSONnode = ({ data, open }) => (
   // return for arrays
-  <details className={styles.node} open={open}>
+  <details className={`${styles.node} ${styles.typeArray}`} open={open}>
     <summary className={styles.summary}>
       <span className={styles.key}>{data.key}</span>{" "}
-      <span className={styles.type}>{"[]"}</span>
-      <span className={styles.arrayLength}>{`(${data.value.length})`}</span>
+      <span className={styles.typeHint}>
+        {"[]"}
+        <span className={styles.arrayLength}>{`(${data.value.length})`}</span>
+      </span>
     </summary>
     <ol className={styles.value} start="0">
       {data.value.map((item, index) => (
-        <li key={index}> {item} </li>
+        <li key={index} className={styles.arrayItem}>
+          {item}
+        </li>
       ))}
     </ol>
   </details>
@@ -37,10 +41,10 @@ const ObjectJSONnode = ({ data, open }) => {
     nodes.push({ key, value });
   }
   return (
-    <details className={styles.node} open={open}>
+    <details className={`${styles.node} ${styles.typeObject}`} open={open}>
       <summary className={styles.summary}>
         <span className={styles.key}>{data.key}</span>{" "}
-        <span className={styles.type}>{"{}"}</span>
+        <span className={styles.typeHint}>{"{}"}</span>
       </summary>
       <div className={styles.value}>
         {nodes.map((node, index) => (
@@ -55,9 +59,12 @@ const OtherJSONnode = ({ data }) => {
   // return for string, number, boolean, null, Date
   // TODO: conditional classes for each type
   return (
-    <div className={styles.node}>
-      <span className={styles.key}>{data.key}</span>: {data.value}
-    </div>
+    <details className={`${styles.node} ${styles.typeOther}`}>
+      <summary className={styles.summary}>
+        <span className={styles.key}>{data.key}</span>:
+        <span className={styles.value}>{data.value}</span>
+      </summary>
+    </details>
   );
 };
 
