@@ -18,10 +18,10 @@ const ArrayJSONnode = ({ data, open }) => (
   // return for arrays
   <details className={`${styles.node} ${styles.typeArray}`} open={open}>
     <summary className={styles.summary}>
-      <span className={styles.key}>{data.key}</span>{" "}
+      <span className={styles.key}>{data.key}</span>:{" "}
       <span className={styles.typeHint}>
         {"[]"}
-        <span className={styles.arrayLength}>{`(${data.value.length})`}</span>
+        <span className={styles.length}>{`(${data.value.length})`}</span>
       </span>
     </summary>
     <ol className={styles.value} start="0">
@@ -37,14 +37,18 @@ const ArrayJSONnode = ({ data, open }) => (
 const ObjectJSONnode = ({ data, open }) => {
   // return for objects
   let nodes = [];
-  for (const [key, value] of Object.entries(data.value)) {
+  const valueAsArray = Object.entries(data.value);
+  for (const [key, value] of valueAsArray) {
     nodes.push({ key, value });
   }
   return (
     <details className={`${styles.node} ${styles.typeObject}`} open={open}>
       <summary className={styles.summary}>
-        <span className={styles.key}>{data.key}</span>{" "}
-        <span className={styles.typeHint}>{"{}"}</span>
+        <span className={styles.key}>{data.key}</span>:{" "}
+        <span className={styles.typeHint}>
+          {"{}"}
+          <span className={styles.length}>{`(${valueAsArray.length})`}</span>
+        </span>
       </summary>
       <div className={styles.value}>
         {nodes.map((node, index) => (

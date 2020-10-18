@@ -39,6 +39,10 @@
 .typeHint {
   font-style: italic;
   color: var(--gray-dark);
+
+  .length {
+    opacity: 0.5;
+  }
 }
 
 .arrayItem {
