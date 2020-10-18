@@ -40,9 +40,10 @@ const App = () => {
     <div className="app-wrap">
       <URLinput
         callback={fetchData}
-        placeholders={[
+        examples={[
           "https://www.breakingbadapi.com/api/characters",
           "https://swapi.dev/api/planets/1/",
+          "https://official-joke-api.appspot.com/jokes/programming/random",
         ]}
       />
       {renderJSONtree()}

@@ -6,12 +6,12 @@ const URLinput = (props) => {
   const inputRef = useRef(null);
   const [query, setQuery] = useState("");
   const [isValid, setIsValid] = useState(false);
-  const [placeholder, setPlaceholder] = useState("");
+  const [example, setExample] = useState("");
 
   useEffect(() => {
     inputRef.current.focus();
-    setPlaceholder(randomFromArray(props.placeholders));
-  }, [inputRef, props.placeholders]);
+    setExample(randomFromArray(props.examples));
+  }, [inputRef, props.examples]);
 
   const validateQuery = (input = query, { logError } = { logError: false }) => {
     try {
@@ -30,8 +30,9 @@ const URLinput = (props) => {
 
   const handlePaste = (e) => {
     e.preventDefault(); // prevents paste event from polluting query value
-    setQuery(e.clipboardData.getData("Text"));
-    validateQuery(e.clipboardData.getData("Text")); // this is a work around. it should be checking `query`, but `query` does not update by the time this is run? 🤷‍♂️
+    const input = e.clipboardData.getData("Text").trim();
+    setQuery(input);
+    validateQuery(input); // this is a work around. it should be checking `query`, but `query` does not update by the time this is run? 🤷‍♂️
   };
 
   const handleSubmit = (e) => {
@@ -63,7 +64,7 @@ const URLinput = (props) => {
         {!isValid && (
           <span id="url-input-status" className={styles.status}>
             Please enter a valid URL.{" "}
-            <span className={styles.hint}>For example: {placeholder}</span>
+            <span className={styles.hint}>For example: {example}</span>
           </span>
         )}
       </div>
